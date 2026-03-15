@@ -160,20 +160,50 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
         </div>
       </div>
 
-      {/* Preset 1: Lienzo apagado */}
+      {/* Preset 1: Lienzo apagado — misma grid pero en negro */}
       {preset === 1 && (
-        <div className="videowall-canvas videowall-off">
-          <span className="off-label">LIENZO APAGADO</span>
+        <div
+          className="videowall-canvas videowall-cts videowall-off-grid"
+          style={{ gridTemplateColumns: `repeat(9, 1fr)` }}
+        >
+          {data.ads.map((_, i) => (
+            <div key={i} className="cts-screen cts-screen-off">
+              <div className="cts-header cts-header-off">
+                <span className="cts-id" style={{ color: '#444' }}>
+                  CTS-{(i + 1).toString().padStart(2, '0')}
+                </span>
+                <span className="cts-off-label">OFF</span>
+              </div>
+              <div className="cts-content cts-content-off">
+                <span className="off-icon">⏻</span>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
-      {/* Preset 2: Banner a pantalla completa */}
+      {/* Preset 2: Banner en grid de 18 monitores */}
       {preset === 2 && (
-        <div className="videowall-canvas videowall-banner">
-          <div className="banner-scroll" style={{ color: data.banner.color }}>
-            <span>{data.banner.text}</span>
-            <span>{data.banner.text}</span>
-          </div>
+        <div
+          className="videowall-canvas videowall-cts videowall-banner-grid"
+          style={{ gridTemplateColumns: `repeat(9, 1fr)` }}
+        >
+          {data.ads.map((_, i) => (
+            <div key={i} className="cts-screen cts-screen-banner">
+              <div className="cts-header cts-header-banner">
+                <span className="cts-id" style={{ color: data.banner.color }}>
+                  CTS-{(i + 1).toString().padStart(2, '0')}
+                </span>
+                <span className="cts-live" style={{ color: data.banner.color }}>● LIVE</span>
+              </div>
+              <div className="cts-content cts-content-banner">
+                <div className="banner-scroll-mini" style={{ color: data.banner.color }}>
+                  <span>{data.banner.text}</span>
+                  <span>{data.banner.text}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

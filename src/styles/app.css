@@ -557,38 +557,60 @@ body {
   overflow: hidden;
 }
 
-/* Preset 1: Off */
-.videowall-off {
-  background: #000;
+/* Preset 1: Off — grid of black screens */
+.videowall-off-grid .cts-screen-off {
+  background: #0a0a0a;
+  border-color: #222 !important;
+}
+
+.videowall-off-grid .cts-header-off {
+  background: #111 !important;
+}
+
+.videowall-off-grid .cts-off-label {
+  font-size: 0.35rem;
+  color: #552222;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.videowall-off-grid .cts-content-off {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
 }
 
-.off-label {
-  font-size: 0.45rem;
+.videowall-off-grid .off-icon {
+  font-size: 1.2rem;
   color: #333;
-  text-transform: uppercase;
-  letter-spacing: 3px;
 }
 
-/* Preset 2: Banner */
-.videowall-banner {
+/* Preset 2: Banner grid */
+.videowall-banner-grid .cts-screen-banner {
   background: #111;
+  border-color: #333 !important;
+}
+
+.videowall-banner-grid .cts-header-banner {
+  background: #1a1a1a !important;
+}
+
+.videowall-banner-grid .cts-content-banner {
+  overflow: hidden;
+  min-height: 40px;
   display: flex;
   align-items: center;
-  overflow: hidden;
 }
 
-.banner-scroll {
+.banner-scroll-mini {
   display: flex;
-  gap: 4rem;
+  gap: 2rem;
   white-space: nowrap;
-  font-size: 0.7rem;
+  font-size: 0.35rem;
   font-weight: bold;
   text-transform: uppercase;
-  animation: bannerScroll 15s linear infinite;
-  letter-spacing: 2px;
+  animation: bannerScroll 10s linear infinite;
+  letter-spacing: 1px;
 }
 
 @keyframes bannerScroll {
