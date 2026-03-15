@@ -5,19 +5,15 @@ type Phase = 'waiting' | 'splash' | 'video';
 
 interface IntroVideoProps {
   onFinished: () => void;
+  onStartMusic: () => void;
 }
 
-export function IntroVideo({ onFinished }: IntroVideoProps) {
+export function IntroVideo({ onFinished, onStartMusic }: IntroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [phase, setPhase] = useState<Phase>('waiting');
 
   const handleStart = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.5;
-      audio.play().catch(() => {});
-    }
+    onStartMusic();
     setPhase('splash');
   };
 
@@ -29,18 +25,15 @@ export function IntroVideo({ onFinished }: IntroVideoProps) {
   }, []);
 
   const handleSkip = () => {
-    audioRef.current?.pause();
     onFinished();
   };
 
   const handleEnded = () => {
-    audioRef.current?.pause();
     onFinished();
   };
 
   return (
     <div className="intro-video">
-      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}videos/intro-music.mp3`} loop />
       {phase === 'waiting' && (
         <div
           style={{
@@ -87,14 +80,11 @@ export function IntroVideo({ onFinished }: IntroVideoProps) {
           style={{ aspectRatio: '16/9', width: '100%', objectFit: 'cover' }}
           onClick={() => {
             const v = videoRef.current;
-            const a = audioRef.current;
             if (v) {
               if (v.paused) {
                 v.play();
-                a?.play();
               } else {
                 v.pause();
-                a?.pause();
               }
             }
           }}

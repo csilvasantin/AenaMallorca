@@ -245,15 +245,26 @@ export function FlightMap({ currentNodeId }: FlightMapProps) {
     const route = ROUTES[country];
     if (!route) return;
 
-    const w = 480;
-    const h = 270;
-    canvas.width = w;
-    canvas.height = h;
+    const resize = () => {
+      const parent = canvas.parentElement;
+      if (parent) {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+      }
+    };
+    resize();
+
+    const ro = new ResizeObserver(resize);
+    if (canvas.parentElement) ro.observe(canvas.parentElement);
+
     const ctx = canvas.getContext('2d')!;
     const startTime = Date.now();
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
+      const w = canvas.width;
+      const h = canvas.height;
+      if (w === 0 || h === 0) return;
 
       // Ocean background
       ctx.fillStyle = COL.ocean;
@@ -373,26 +384,29 @@ export function FlightMap({ currentNodeId }: FlightMapProps) {
       ctx.fillStyle = '#333355';
       ctx.fillText(route.ocean, w * 0.50, h * 0.85);
 
-      if (elapsed > animDuration + 3000) {
-        clearInterval(interval);
-      }
+      // Keep animating as background — no auto-stop
     }, 33);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      ro.disconnect();
+    };
   }, [country]);
 
   if (!country) return null;
 
   return (
-    <div className="flight-map">
+    <div className="flight-map-bg">
       <canvas
         ref={canvasRef}
         style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
           width: '100%',
+          height: '100%',
           display: 'block',
           imageRendering: 'pixelated',
-          border: '4px solid var(--pixel-border)',
-          boxShadow: '4px 4px 0 var(--pixel-shadow)',
         }}
       />
     </div>
