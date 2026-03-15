@@ -21,7 +21,7 @@ const ROUTES: Record<string, FlightRoute> = {
       { x: 0.60, y: 0.32 },
       { x: 0.50, y: 0.35 },
       { x: 0.40, y: 0.38 },
-      { x: 0.32, y: 0.42, label: 'MADRID' },
+      { x: 0.34, y: 0.44, label: 'PALMA' },
     ],
   },
   dubai: {
@@ -31,7 +31,7 @@ const ROUTES: Record<string, FlightRoute> = {
       { x: 0.55, y: 0.47 },
       { x: 0.48, y: 0.43 },
       { x: 0.40, y: 0.40 },
-      { x: 0.32, y: 0.42, label: 'MADRID' },
+      { x: 0.34, y: 0.44, label: 'PALMA' },
     ],
   },
   london: {
@@ -40,7 +40,7 @@ const ROUTES: Record<string, FlightRoute> = {
       { x: 0.38, y: 0.25, label: 'LONDON' },
       { x: 0.37, y: 0.30 },
       { x: 0.35, y: 0.35 },
-      { x: 0.32, y: 0.42, label: 'MADRID' },
+      { x: 0.34, y: 0.44, label: 'PALMA' },
     ],
   },
 };
