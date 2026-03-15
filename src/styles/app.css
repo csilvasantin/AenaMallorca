@@ -504,69 +504,220 @@ body {
   background: var(--bg-secondary);
 }
 
+.videowall-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .videowall-title {
   font-size: 0.55rem;
   color: var(--accent);
-  margin-bottom: 0.8rem;
   text-transform: uppercase;
   text-shadow: 1px 1px 0 #5a2d00;
 }
 
-.videowall-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-}
-
-.videowall-card {
-  background: var(--bg-card);
-  border: 3px solid var(--pixel-border);
-  padding: 0.6rem;
+.preset-buttons {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  animation: pixelSlideUp 0.3s steps(5) both;
-  transition: all 0.1s;
-  box-shadow: 3px 3px 0 var(--pixel-shadow);
+  gap: 0.3rem;
 }
 
-.videowall-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 var(--pixel-shadow);
+.preset-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--pixel-border);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.35rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 2px 2px 0 var(--pixel-shadow);
+}
+
+.preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.preset-btn.active {
+  background: var(--accent);
+  color: var(--bg-primary);
   border-color: var(--accent);
 }
 
-.videowall-emoji {
-  font-size: 1.3rem;
-  width: 2rem;
-  height: 2rem;
+/* Shared canvas area */
+.videowall-canvas {
+  min-height: 200px;
+  border: 3px solid var(--pixel-border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Preset 1: Off */
+.videowall-off {
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
-.videowall-text {
+.off-label {
+  font-size: 0.45rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* Preset 2: Banner */
+.videowall-banner {
+  background: #111;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.banner-scroll {
+  display: flex;
+  gap: 4rem;
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: bannerScroll 15s linear infinite;
+  letter-spacing: 2px;
+}
+
+@keyframes bannerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Preset 3: CTS Grid */
+.cts-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.cts-count {
+  font-size: 0.4rem;
+  color: var(--accent3);
+}
+
+.cts-toggles {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.cts-toggle {
+  width: 20px;
+  height: 16px;
+  border: 1px solid var(--pixel-border);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.25rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  padding: 0;
+  line-height: 16px;
+  text-align: center;
+}
+
+.cts-toggle.on {
+  background: var(--accent3);
+  color: #000;
+  border-color: var(--accent3);
+}
+
+.cts-toggle.off {
+  background: #1a1a2e;
+  color: #444;
+  border-color: #333;
+}
+
+.cts-toggle:hover {
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.videowall-cts {
+  display: grid;
+  gap: 4px;
+  background: #111;
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.cts-screen {
+  background: var(--bg-card);
+  border: 2px solid var(--pixel-border);
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
+  animation: pixelFadeIn 0.2s steps(3) both;
+  min-height: 70px;
+  overflow: hidden;
 }
 
-.videowall-ad-title {
-  font-size: 0.4rem;
+.cts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.15rem 0.3rem;
+  border-bottom: 1px solid var(--pixel-border);
+}
+
+.cts-id {
+  font-size: 0.3rem;
+  font-weight: bold;
+}
+
+.cts-live {
+  font-size: 0.25rem;
+  color: #4caf50;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.cts-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.cts-emoji {
+  font-size: 1.2rem;
+}
+
+.cts-title {
+  font-size: 0.3rem;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-.videowall-subtitle {
-  font-size: 0.35rem;
+.cts-subtitle {
+  font-size: 0.25rem;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* Scanline effect on body */
@@ -605,7 +756,12 @@ body::after {
     display: none;
   }
 
-  .videowall-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .videowall-cts {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .preset-buttons {
+    width: 100%;
+    justify-content: center;
   }
 }
