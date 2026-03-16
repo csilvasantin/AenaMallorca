@@ -194,7 +194,7 @@ export function AenaSplash({ onFinished }: AenaSplashProps) {
         ctx.font = `${10}px "Press Start 2P", monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.fillText('AEROPUERTOS para ti', w / 2 + 6, subY + 1);
+        ctx.fillText('aeropuertos para ti', w / 2 + 6, subY + 1);
       }
 
       // Second subtitle line - appears after AEROPUERTOS

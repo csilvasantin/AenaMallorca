@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
+import { PasswordGate } from './components/PasswordGate';
 import { IntroVideo } from './components/IntroVideo';
 import { StoryFlow } from './components/StoryFlow';
 import { demoStory } from './data/story';
@@ -39,30 +40,34 @@ function App() {
 
   if (!introFinished) {
     return (
-      <div className="app">
-        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}videos/intro-music.mp3`} loop />
-        <IntroVideo onFinished={() => setIntroFinished(true)} onStartMusic={startMusic} onToggleMute={toggleMute} muted={muted} />
-      </div>
+      <PasswordGate>
+        <div className="app">
+          <audio ref={audioRef} src={`${import.meta.env.BASE_URL}videos/intro-music.mp3`} loop />
+          <IntroVideo onFinished={() => setIntroFinished(true)} onStartMusic={startMusic} onToggleMute={toggleMute} muted={muted} />
+        </div>
+      </PasswordGate>
     );
   }
 
   return (
-    <div className="app">
-      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}videos/intro-music.mp3`} loop />
-      <header className="app-header">
-        <h1>✈️ Aena La Aventura Gráfica</h1>
-        <p className="subtitle">powered by Admira</p>
-        <button className="replay-intro-btn" onClick={handleReplayIntro}>
-          🎬 Ver intro
+    <PasswordGate>
+      <div className="app">
+        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}videos/intro-music.mp3`} loop />
+        <header className="app-header">
+          <h1>✈️ Aena La Aventura Gráfica</h1>
+          <p className="subtitle">powered by Admira</p>
+          <button className="replay-intro-btn" onClick={handleReplayIntro}>
+            🎬 Ver intro
+          </button>
+        </header>
+        <button className="mute-btn" onClick={toggleMute}>
+          {muted ? '🔇' : '🔊'}
         </button>
-      </header>
-      <button className="mute-btn" onClick={toggleMute}>
-        {muted ? '🔇' : '🔊'}
-      </button>
-      <main>
-        <StoryFlow story={demoStory} />
-      </main>
-    </div>
+        <main>
+          <StoryFlow story={demoStory} />
+        </main>
+      </div>
+    </PasswordGate>
   );
 }
 

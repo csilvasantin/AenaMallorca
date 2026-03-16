@@ -897,6 +897,141 @@ body::after {
   z-index: 9999;
 }
 
+/* Password Gate */
+.password-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 1rem;
+}
+
+.password-box {
+  background: var(--bg-secondary);
+  border: var(--pixel) solid var(--accent);
+  box-shadow: var(--pixel) var(--pixel) 0 var(--pixel-shadow);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  animation: pixelFadeIn 0.4s steps(5);
+}
+
+.lock-icon {
+  margin-bottom: 1.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.lock-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 6px);
+  grid-template-rows: repeat(9, 6px);
+  gap: 0px;
+}
+
+.password-title {
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-shadow: 2px 2px 0 #5a2d00;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.password-subtitle {
+  font-size: 0.4rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.password-input {
+  background: var(--bg-card);
+  border: 3px solid var(--pixel-border);
+  color: var(--text-primary);
+  padding: 0.6rem 0.8rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  text-align: center;
+  width: 100%;
+  outline: none;
+  box-shadow: inset 2px 2px 0 var(--pixel-shadow);
+  transition: border-color 0.15s;
+  letter-spacing: 4px;
+}
+
+.password-input:focus {
+  border-color: var(--accent);
+}
+
+.password-input.password-error {
+  border-color: var(--accent2);
+  animation: shake 0.3s steps(5);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.password-btn {
+  background: var(--accent);
+  border: 3px solid #ffab40;
+  color: var(--bg-primary);
+  padding: 0.6rem 2rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.password-btn:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--pixel-shadow);
+}
+
+.password-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.password-error-msg {
+  margin-top: 0.8rem;
+  font-size: 0.4rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  animation: pixelFadeIn 0.2s steps(3);
+}
+
+.password-footer {
+  margin-top: 2rem;
+  font-size: 0.35rem;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.password-footer span:first-child {
+  color: #666;
+}
+
+.password-footer span:last-child {
+  color: var(--accent3);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .app {
