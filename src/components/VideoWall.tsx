@@ -5,6 +5,7 @@ interface Ad {
   title: string;
   subtitle: string;
   color: string;
+  image?: string;
 }
 
 interface CountryAds {
@@ -90,24 +91,24 @@ const countryAdsMap: Record<string, CountryAds> = {
     country: 'Mallorca',
     banner: { text: '🇪🇸 BIENVENIDOS A PALMA DE MALLORCA — AEROPUERTO SON SANT JOAN — DISFRUTA DE LA ISLA', color: '#ff8c00' },
     ads: [
-      { emoji: '🏖️', title: 'Playa de Palma', subtitle: 'Arena blanca 6km', color: '#00bcd4' },
-      { emoji: '⛪', title: 'Catedral La Seu', subtitle: 'Gótico mediterráneo', color: '#8d6e63' },
-      { emoji: '🏰', title: 'Castillo Bellver', subtitle: 'Fortaleza circular', color: '#795548' },
-      { emoji: '🚂', title: 'Tren de Sóller', subtitle: 'Ruta panorámica 1912', color: '#ff7043' },
-      { emoji: '🌊', title: 'Cala Mondragó', subtitle: 'Parque Natural', color: '#26c6da' },
-      { emoji: '🧀', title: 'Mercat de l\'Olivar', subtitle: 'Gastronomía local', color: '#ffa726' },
-      { emoji: '⛰️', title: 'Serra Tramuntana', subtitle: 'UNESCO Patrimonio', color: '#66bb6a' },
-      { emoji: '🛥️', title: 'Excursión Cabrera', subtitle: 'Isla paradisíaca', color: '#42a5f5' },
-      { emoji: '🍷', title: 'Bodega Binissalem', subtitle: 'Vinos mallorquines', color: '#e53935' },
-      { emoji: '🏊', title: 'Cala Varques', subtitle: 'Cala escondida', color: '#00e5ff' },
-      { emoji: '🎨', title: 'Fundación Miró', subtitle: 'Arte en Palma', color: '#ec407a' },
-      { emoji: '🚴', title: 'Ruta ciclista', subtitle: 'Cap Formentor', color: '#4caf50' },
-      { emoji: '🦎', title: 'Cuevas del Drach', subtitle: 'Lago subterráneo', color: '#7e57c2' },
-      { emoji: '🍊', title: 'Valldemossa', subtitle: 'Pueblo de Chopin', color: '#ff9800' },
-      { emoji: '⛵', title: 'Puerto Portals', subtitle: 'Marina de lujo', color: '#5c6bc0' },
-      { emoji: '🏝️', title: 'Es Trenc', subtitle: 'Playa virgen', color: '#29b6f6' },
-      { emoji: '🎵', title: 'Jazz Voyeur Club', subtitle: 'Noches de Palma', color: '#ab47bc' },
-      { emoji: '🐟', title: 'Lonja de Palma', subtitle: 'Arquitectura gótica', color: '#78909c' },
+      { emoji: '🏖️', title: 'Playa de Palma', subtitle: 'Arena blanca 6km', color: '#00bcd4', image: 'images/mallorca/playa-palma.jpg' },
+      { emoji: '⛪', title: 'Catedral La Seu', subtitle: 'Gótico mediterráneo', color: '#8d6e63', image: 'images/mallorca/catedral-seu.jpg' },
+      { emoji: '🏰', title: 'Castillo Bellver', subtitle: 'Fortaleza circular', color: '#795548', image: 'images/mallorca/castillo-bellver.jpg' },
+      { emoji: '🚂', title: 'Tren de Sóller', subtitle: 'Ruta panorámica 1912', color: '#ff7043', image: 'images/mallorca/tren-soller.jpg' },
+      { emoji: '🌊', title: 'Cala Mondragó', subtitle: 'Parque Natural', color: '#26c6da', image: 'images/mallorca/cala-mondrago.jpg' },
+      { emoji: '🧀', title: 'Mercat de l\'Olivar', subtitle: 'Gastronomía local', color: '#ffa726', image: 'images/mallorca/mercat-olivar.jpg' },
+      { emoji: '⛰️', title: 'Serra Tramuntana', subtitle: 'UNESCO Patrimonio', color: '#66bb6a', image: 'images/mallorca/serra-tramuntana.jpg' },
+      { emoji: '🛥️', title: 'Excursión Cabrera', subtitle: 'Isla paradisíaca', color: '#42a5f5', image: 'images/mallorca/isla-cabrera.jpg' },
+      { emoji: '🍷', title: 'Bodega Binissalem', subtitle: 'Vinos mallorquines', color: '#e53935', image: 'images/mallorca/bodega-binissalem.jpg' },
+      { emoji: '🏊', title: 'Cala Varques', subtitle: 'Cala escondida', color: '#00e5ff', image: 'images/mallorca/cala-varques.jpg' },
+      { emoji: '🎨', title: 'Fundación Miró', subtitle: 'Arte en Palma', color: '#ec407a', image: 'images/mallorca/fundacion-miro.jpg' },
+      { emoji: '🚴', title: 'Ruta ciclista', subtitle: 'Cap Formentor', color: '#4caf50', image: 'images/mallorca/ciclismo-formentor.jpg' },
+      { emoji: '🦎', title: 'Cuevas del Drach', subtitle: 'Lago subterráneo', color: '#7e57c2', image: 'images/mallorca/cuevas-drach.jpg' },
+      { emoji: '🍊', title: 'Valldemossa', subtitle: 'Pueblo de Chopin', color: '#ff9800', image: 'images/mallorca/valldemossa.jpg' },
+      { emoji: '⛵', title: 'Puerto Portals', subtitle: 'Marina de lujo', color: '#5c6bc0', image: 'images/mallorca/puerto-portals.jpg' },
+      { emoji: '🏝️', title: 'Es Trenc', subtitle: 'Playa virgen', color: '#29b6f6', image: 'images/mallorca/es-trenc.jpg' },
+      { emoji: '🎵', title: 'Jazz Voyeur Club', subtitle: 'Noches de Palma', color: '#ab47bc', image: 'images/mallorca/jazz-palma.jpg' },
+      { emoji: '🐟', title: 'Lonja de Palma', subtitle: 'Arquitectura gótica', color: '#78909c', image: 'images/mallorca/lonja-palma.jpg' },
     ],
   },
 };
@@ -254,10 +255,13 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
           }
 
           // Preset 3: contenido CTS
+          const basePath = import.meta.env.BASE_URL;
+          const hasImage = !!ad.image;
+
           return (
             <div
               key={i}
-              className="cts-screen"
+              className={`cts-screen ${hasImage ? 'cts-screen-image' : ''}`}
               style={{
                 borderColor: ad.color + '60',
                 animationDelay: `${i * 0.05}s`,
@@ -267,11 +271,26 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
                 <span className="cts-id" style={{ color: ad.color }}>{ctsLabel}</span>
                 <span className="cts-live">● LIVE</span>
               </div>
-              <div className="cts-content">
-                <div className="cts-emoji">{ad.emoji}</div>
-                <span className="cts-title" style={{ color: ad.color }}>{ad.title}</span>
-                <span className="cts-subtitle">{ad.subtitle}</span>
-              </div>
+              {hasImage ? (
+                <div className="cts-content cts-content-with-image">
+                  <img
+                    src={`${basePath}${ad.image}`}
+                    alt={ad.title}
+                    className="cts-image"
+                    loading="lazy"
+                  />
+                  <div className="cts-image-overlay">
+                    <span className="cts-title" style={{ color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>{ad.title}</span>
+                    <span className="cts-subtitle" style={{ color: '#ddd', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>{ad.subtitle}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="cts-content">
+                  <div className="cts-emoji">{ad.emoji}</div>
+                  <span className="cts-title" style={{ color: ad.color }}>{ad.title}</span>
+                  <span className="cts-subtitle">{ad.subtitle}</span>
+                </div>
+              )}
             </div>
           );
         })}
