@@ -39,11 +39,17 @@ export function EndScreen({ story, finalNodeId, history, onRestart, onGoBack }: 
   return (
     <div className="end-screen">
       {isMallorcaExcursion && onGoBack && (
-        <div className="story-header" style={{ marginBottom: '0.5rem' }}>
+        <div className="story-header explorer-header" style={{ marginBottom: '0.5rem' }}>
           <h2 className="scene-title">🏝️ {finalNode.title}</h2>
           <button className="back-btn" onClick={onGoBack}>
             ← Volver
           </button>
+          <div className="explorer-walker">
+            <div
+              className="explorer-sprite"
+              style={{ backgroundImage: `url(${basePath}images/explorer-sprite.png)` }}
+            />
+          </div>
         </div>
       )}
 
@@ -85,9 +91,17 @@ export function EndScreen({ story, finalNodeId, history, onRestart, onGoBack }: 
             </div>
           </div>
 
-          <button className="restart-btn" onClick={onRestart}>
-            🔄 Volver a empezar
-          </button>
+          {/* Indiana Jones banner */}
+          <div className="indy-banner-wrapper" onClick={onRestart}>
+            <img
+              src={`${basePath}images/indy-banner.png`}
+              alt="Indiana Jones"
+              className="indy-banner"
+            />
+            <div className="indy-banner-cta">
+              <span>🔄 VOLVER A EMPEZAR</span>
+            </div>
+          </div>
         </>
       ) : (
         <>

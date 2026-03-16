@@ -1172,3 +1172,94 @@ body::after {
   margin: 0;
   text-align: center;
 }
+
+
+
+/* === Explorer Walking Animation === */
+.explorer-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.explorer-walker {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.explorer-sprite {
+  width: 32px;
+  height: 48px;
+  background-size: 64px 48px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  position: absolute;
+  animation:
+    explorer-walk-bounce 10s linear infinite,
+    explorer-step 0.35s steps(1) infinite;
+}
+
+@keyframes explorer-walk-bounce {
+  0%   { left: -32px; transform: scaleX(1); }
+  45%  { left: calc(100%); transform: scaleX(1); }
+  50%  { left: calc(100%); transform: scaleX(-1); }
+  95%  { left: -32px; transform: scaleX(-1); }
+  100% { left: -32px; transform: scaleX(1); }
+}
+
+@keyframes explorer-step {
+  0%  { background-position: 0 0; }
+  50% { background-position: -32px 0; }
+}
+
+/* === Indiana Jones Banner === */
+.indy-banner-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid #ff8c00;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.indy-banner-wrapper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255,140,0,0.5);
+}
+
+.indy-banner {
+  width: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.indy-banner-cta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.indy-banner-cta span {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.9rem;
+  color: #FFD700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+  letter-spacing: 2px;
+  animation: indy-pulse 2s ease-in-out infinite;
+}
+
+@keyframes indy-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
