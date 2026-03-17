@@ -1184,36 +1184,37 @@ body::after {
 .explorer-walker {
   position: absolute;
   bottom: 2px;
-  left: 0;
-  right: 0;
-  height: 48px;
+  /* Walk only between the title text and the Volver button */
+  left: 35%;
+  right: 15%;
+  height: 34px;
   pointer-events: none;
   overflow: hidden;
 }
 
 .explorer-sprite {
-  width: 32px;
-  height: 48px;
-  background-size: 64px 48px;
+  width: 22px;
+  height: 34px;
+  background-size: 44px 34px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   position: absolute;
   animation:
-    explorer-walk-bounce 10s linear infinite,
+    explorer-walk-bounce 8s linear infinite,
     explorer-step 0.35s steps(1) infinite;
 }
 
 @keyframes explorer-walk-bounce {
-  0%   { left: -32px; transform: scaleX(1); }
-  45%  { left: calc(100%); transform: scaleX(1); }
-  50%  { left: calc(100%); transform: scaleX(-1); }
-  95%  { left: -32px; transform: scaleX(-1); }
-  100% { left: -32px; transform: scaleX(1); }
+  0%   { left: 0; transform: scaleX(1); }
+  45%  { left: calc(100% - 22px); transform: scaleX(1); }
+  50%  { left: calc(100% - 22px); transform: scaleX(-1); }
+  95%  { left: 0; transform: scaleX(-1); }
+  100% { left: 0; transform: scaleX(1); }
 }
 
 @keyframes explorer-step {
   0%  { background-position: 0 0; }
-  50% { background-position: -32px 0; }
+  50% { background-position: -22px 0; }
 }
 
 /* === Indiana Jones Banner === */

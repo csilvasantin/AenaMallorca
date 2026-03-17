@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 interface Ad {
   emoji: string;
@@ -14,17 +14,17 @@ interface CountryAds {
   banner: { text: string; color: string };
 }
 
-// Map mall_ node IDs to their image path
-const mallNodeImageMap: Record<string, { image: string; title: string; subtitle: string; color: string }> = {
-  mall_playa: { image: 'images/mallorca/playa-palma.jpg', title: 'Playa de Palma', subtitle: 'Arena blanca 6km', color: '#00bcd4' },
-  mall_catedral: { image: 'images/mallorca/catedral-seu.jpg', title: 'Catedral La Seu', subtitle: 'Gótico mediterráneo', color: '#8d6e63' },
-  mall_bellver: { image: 'images/mallorca/castillo-bellver.jpg', title: 'Castillo Bellver', subtitle: 'Fortaleza circular', color: '#795548' },
-  mall_soller: { image: 'images/mallorca/tren-soller.jpg', title: 'Tren de Sóller', subtitle: 'Ruta panorámica 1912', color: '#ff7043' },
-  mall_serra: { image: 'images/mallorca/serra-tramuntana.jpg', title: 'Serra Tramuntana', subtitle: 'UNESCO Patrimonio', color: '#66bb6a' },
-  mall_drach: { image: 'images/mallorca/cuevas-drach.jpg', title: 'Cuevas del Drach', subtitle: 'Lago subterráneo', color: '#7e57c2' },
-  mall_valldemossa: { image: 'images/mallorca/valldemossa.jpg', title: 'Valldemossa', subtitle: 'Pueblo de Chopin', color: '#ff9800' },
-  mall_trenc: { image: 'images/mallorca/es-trenc.jpg', title: 'Es Trenc', subtitle: 'Playa virgen', color: '#29b6f6' },
-  mall_portals: { image: 'images/mallorca/puerto-portals.jpg', title: 'Puerto Portals', subtitle: 'Marina de lujo', color: '#5c6bc0' },
+// Map mall_ node IDs to their image/video path
+const mallNodeImageMap: Record<string, { image: string; video: string; title: string; subtitle: string; color: string }> = {
+  mall_playa: { image: 'images/mallorca/playa-palma.jpg', video: 'videos/excursiones/mall_playa.mp4', title: 'Playa de Palma', subtitle: 'Arena blanca 6km', color: '#00bcd4' },
+  mall_catedral: { image: 'images/mallorca/catedral-seu.jpg', video: 'videos/excursiones/mall_catedral.mp4', title: 'Catedral La Seu', subtitle: 'Gótico mediterráneo', color: '#8d6e63' },
+  mall_bellver: { image: 'images/mallorca/castillo-bellver.jpg', video: 'videos/excursiones/mall_bellver.mp4', title: 'Castillo Bellver', subtitle: 'Fortaleza circular', color: '#795548' },
+  mall_soller: { image: 'images/mallorca/tren-soller.jpg', video: 'videos/excursiones/mall_soller.mp4', title: 'Tren de Sóller', subtitle: 'Ruta panorámica 1912', color: '#ff7043' },
+  mall_serra: { image: 'images/mallorca/serra-tramuntana.jpg', video: 'videos/excursiones/mall_serra.mp4', title: 'Serra Tramuntana', subtitle: 'UNESCO Patrimonio', color: '#66bb6a' },
+  mall_drach: { image: 'images/mallorca/cuevas-drach.jpg', video: 'videos/excursiones/mall_drach.mp4', title: 'Cuevas del Drach', subtitle: 'Lago subterráneo', color: '#7e57c2' },
+  mall_valldemossa: { image: 'images/mallorca/valldemossa.jpg', video: 'videos/excursiones/mall_valldemossa.mp4', title: 'Valldemossa', subtitle: 'Pueblo de Chopin', color: '#ff9800' },
+  mall_trenc: { image: 'images/mallorca/es-trenc.jpg', video: 'videos/excursiones/mall_trenc.mp4', title: 'Es Trenc', subtitle: 'Playa virgen', color: '#29b6f6' },
+  mall_portals: { image: 'images/mallorca/puerto-portals.jpg', video: 'videos/excursiones/mall_portals.mp4', title: 'Puerto Portals', subtitle: 'Marina de lujo', color: '#5c6bc0' },
 };
 
 const countryAdsMap: Record<string, CountryAds> = {
@@ -145,6 +145,7 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
   const country = getCountryFromNodeId(currentNodeId);
   const [preset, setPreset] = useState<Preset>(3);
   const [disabledCTS, setDisabledCTS] = useState<Set<number>>(new Set());
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const toggleCTS = useCallback((index: number) => {
     setDisabledCTS(prev => {
@@ -156,6 +157,20 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
       }
       return next;
     });
+  }, []);
+
+  // Sync all video elements to the first one's currentTime
+  useEffect(() => {
+    const syncInterval = setInterval(() => {
+      const master = videoRefs.current.find(v => v && !v.paused);
+      if (!master) return;
+      videoRefs.current.forEach(v => {
+        if (v && v !== master && Math.abs(v.currentTime - master.currentTime) > 0.1) {
+          v.currentTime = master.currentTime;
+        }
+      });
+    }, 500);
+    return () => clearInterval(syncInterval);
   }, []);
 
   if (!country) return null;
@@ -256,10 +271,10 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
             );
           }
 
-          // Preset 2: if excursion selected → mosaic; otherwise → banner
+          // Preset 2: if excursion selected → video mosaic; otherwise → banner
           if (preset === 2) {
             if (selectedExcursion) {
-              // Mosaic mode: each monitor shows a piece of the image
+              // Video Mosaic mode: each monitor shows a piece of the video
               const col = i % 9;
               const row = Math.floor(i / 9);
               return (
@@ -269,14 +284,23 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
                     <span className="cts-live" style={{ color: selectedExcursion.color }}>● LIVE</span>
                   </div>
                   <div className="cts-content cts-content-mosaic">
-                    <div
-                      className="cts-mosaic-piece"
-                      style={{
-                        backgroundImage: `url(${basePath}${selectedExcursion.image})`,
-                        backgroundSize: '900% 200%',
-                        backgroundPosition: `${(col / 8) * 100}% ${(row / 1) * 100}%`,
-                      }}
-                    />
+                    <div className="cts-mosaic-piece" style={{ overflow: 'hidden' }}>
+                      <video
+                        ref={el => { videoRefs.current[i] = el; }}
+                        src={`${basePath}${selectedExcursion.video}`}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        style={{
+                          width: '900%',
+                          height: '200%',
+                          objectFit: 'cover',
+                          marginLeft: `${-col * 100}%`,
+                          marginTop: `${-row * 100}%`,
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               );
@@ -299,7 +323,7 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
             );
           }
 
-          // Preset 3: if excursion selected → all monitors show that image; otherwise → individual CTS
+          // Preset 3: if excursion selected → all monitors show that video; otherwise → individual CTS
           if (selectedExcursion) {
             return (
               <div
@@ -315,10 +339,14 @@ export function VideoWall({ currentNodeId }: VideoWallProps) {
                   <span className="cts-live">● LIVE</span>
                 </div>
                 <div className="cts-content cts-content-with-image">
-                  <img
-                    src={`${basePath}${selectedExcursion.image}`}
-                    alt={selectedExcursion.title}
+                  <video
+                    ref={el => { videoRefs.current[i] = el; }}
+                    src={`${basePath}${selectedExcursion.video}`}
                     className="cts-image"
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
                   />
                   <div className="cts-image-overlay">
                     <span className="cts-title" style={{ color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>{selectedExcursion.title}</span>
